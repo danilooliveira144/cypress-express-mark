@@ -1,0 +1,22 @@
+{
+  "name": "cypress-express-mark",
+  "version": "1.0.0",
+  "description": "Projeto de testes de ponta a ponta no Mark L",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilooliveira144/cypress-express-mark.git"
+  },
+  "author": "Danilo Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danilooliveira144/cypress-express-mark/issues"
+  },
+  "homepage": "https://github.com/danilooliveira144/cypress-express-mark#readme",
+  "devDependencies": {
+    "cypress": "^12.2.0"
+  }
+}
