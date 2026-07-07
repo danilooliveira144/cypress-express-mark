@@ -18,5 +18,8 @@
   "homepage": "https://github.com/danilooliveira144/cypress-express-mark#readme",
   "devDependencies": {
     "cypress": "^12.2.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }
