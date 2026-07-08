@@ -5,12 +5,15 @@ import { faker } from '@faker-js/faker';
 describe('Tarefas', () => {
 
     it('Deve realizar o cadastro da tarefa com sucesso', () => {
+
+        const taskName = 'Estudando cypress'
+
         // Acessando o endereço do sistema
         cy.visit('http://localhost:3000/')
 
         // Adicionando um valor ao campo de texto atráves do atributo placeholder do elemento input
         cy.get('input[placeholder="Add a new Task"]')
-            .type('Estudando cypress')
+            .type(taskName)
 
         // Clicando no botão de criar, utilizando a função contains do cypress
         cy.contains('button', 'Create').click()
@@ -88,12 +91,17 @@ describe('Tarefas', () => {
             .should('be.visible')
     })
 
-    it('Não deve permitir tarefa duplicada', () => {
+    it.only('Não deve permitir tarefa duplicada', () => {
+
+        const task = {
+            name: 'Estudar JavaScript',
+            is_done: false
+        }
 
         cy.request({
             url: 'http://localhost:3333/helper/tasks/',
             method: 'DELETE',
-            body: { name: 'Estudar JavaScript' }
+            body: { name: task.name }
         }).then(response => {
             expect(response.status).to.eq(204)
         })
@@ -101,7 +109,7 @@ describe('Tarefas', () => {
         cy.request({
             url: 'http://localhost:3333/tasks/',
             method: 'POST',
-            body: { "name": 'Estudar JavaScript', 'is_done': false }
+            body: task
         }).then(response => {
             expect(response.status).to.eq(201)
         })
@@ -109,7 +117,7 @@ describe('Tarefas', () => {
         cy.visit('http://localhost:3000/')
 
         cy.get('input[placeholder="Add a new Task"]')
-            .type('Estudar JavaScript')
+            .type(task.name)
 
         cy.contains('button', 'Create').click()
 
