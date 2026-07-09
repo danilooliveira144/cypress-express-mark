@@ -110,11 +110,33 @@ describe('Tarefas', () => {
                 .should('have.text', 'Task already exists!')
         })
 
-        it.only('Campo obrigatório', () => {
+        it('Campo obrigatório', () => {
             cy.createTask()
             cy.isRequired('This is a required field')
 
         })
+    })
 
+    context('Atualização', () => {
+        it.only('deve concluir uma tarefa', () => {
+
+            const task = {
+                name: 'Pagar contas',
+                is_done: false
+            }
+
+            cy.removeTask(task.name)
+            cy.postCreateTask(task)
+
+            cy.visit('http://localhost:3000/')
+
+            cy.contains('p', task.name)
+                .parent()
+                .find('button[class*=ItemToggle]')
+                .click()
+
+            cy.contains('p', task.name)
+                .should('have.css', 'text-decoration-line', 'line-through')
+        })
     })
 })
