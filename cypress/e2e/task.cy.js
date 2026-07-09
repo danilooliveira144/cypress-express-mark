@@ -91,35 +91,18 @@ describe('Tarefas', () => {
             .should('be.visible')
     })
 
-    it.only('Não deve permitir tarefa duplicada', () => {
+    it('Não deve permitir tarefa duplicada', () => {
 
         const task = {
             name: 'Estudar JavaScript',
             is_done: false
         }
 
-        cy.request({
-            url: 'http://localhost:3333/helper/tasks/',
-            method: 'DELETE',
-            body: { name: task.name }
-        }).then(response => {
-            expect(response.status).to.eq(204)
-        })
+        cy.removeTask(task.name)
 
-        cy.request({
-            url: 'http://localhost:3333/tasks/',
-            method: 'POST',
-            body: task
-        }).then(response => {
-            expect(response.status).to.eq(201)
-        })
+        cy.postCreateTask(task)
 
-        cy.visit('http://localhost:3000/')
-
-        cy.get('input[placeholder="Add a new Task"]')
-            .type(task.name)
-
-        cy.contains('button', 'Create').click()
+        cy.createTask(task.name)
 
         cy.get('.swal2-html-container')
             .should('be.visible')
