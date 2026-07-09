@@ -139,4 +139,27 @@ describe('Tarefas', () => {
                 .should('have.css', 'text-decoration-line', 'line-through')
         })
     })
+
+    context('Exclusão', () => {
+        it('deve remover uma tarefa', () => {
+
+            const task = {
+                name: 'Comprar',
+                is_done: false
+            }
+
+            cy.removeTask(task.name)
+            cy.postCreateTask(task)
+
+            cy.visit('http://localhost:3000/')
+
+            cy.contains('p', task.name)
+                .parent()
+                .find('button[class*=ItemDelete]')
+                .click()
+
+            cy.contains('p', task.name)
+                .should('not.exist')
+        })
+    })
 })
